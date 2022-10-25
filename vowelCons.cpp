@@ -17,6 +17,7 @@ bool replay() {
     std::cout << "Would you like to check another letter? [n/y] ";
     std::cin >> yesNo;
 
+    
     while (loop) {
         if (yesNo == "y" || yesNo == "Y") {
             repeat = true;
@@ -86,9 +87,8 @@ int main() {
 
     // assigning variables (not user input)
     isVowel = false;
-    repeat = true;
 
-    while (repeat) {
+    do {
         // getting user input
         userLetter = userInput();
 
@@ -117,5 +117,5 @@ int main() {
 
         // if user wants to replay
         replay();
-    }
+    } while (repeat);
 }
