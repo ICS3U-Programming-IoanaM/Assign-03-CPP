@@ -108,6 +108,7 @@ int main() {
             // checks if user letter is a vowel
         } else if (isVowel) {
             std::cout << userLetter << " is a vowel\n";
+            isVowel = false;
 
             // if user letter is a consonant
         } else {
