@@ -7,99 +7,111 @@
 
 #include <iostream>
 
-/*
-# tells user if their input is valid
-def is_valid(user_input):
-    # variables
-    invalid = True
+bool replay() {
+    // variables
+    std::string yesNo;
+    bool repeat, loop;
+    loop = true;
 
-    while invalid:
-        # if user imputed multiple letters or symbols
-        if len(user_input) > 1:
-            print("Please input ONE character.")
-            user_input = input("\nEnter a letter: ")
+    // asks for user input
+    std::cout << "Would you like to check another letter? [n/y] ";
+    std::cin >> yesNo;
 
-        # if user doesn't input anything
-        elif len(user_input) == 0:
-            print("Please type in a letter.")
-            user_input = input("\nEnter a letter: ")
+    while (loop) {
+        if (yesNo == "y" || yesNo == "Y") {
+            repeat = true;
+            loop = false;
+        } else if (yesNo == "n" || yesNo == "N") {
+            repeat = false;
+            loop = false;
+        } else {
+            std::cout << "please pick either no or yes.\n";
+            std::cout << "Would you like to check another letter? [n/y] ";
+            std::cin >> yesNo;
+            loop = true;
+        }
+    }
+    return repeat;
+}
 
-        else:
-            character = ord(user_input)
-            # checks if character is not a letter
-            if character < 65 or (character > 90 and character < 97) or character > 122:
-                print(f"{user_input} is not a letter. Please try again")
-                user_input = input("\nEnter a letter: ")
-
-            # checks if character is an accented letter
-            elif character >= 192 and character <= 383:
-                print("Letters can't be accented. Please try again.")
-                user_input = input("\nEnter a letter: ")
-
-            else:
-                invalid = False
-                return user_input
-reference:
-https://www.w3schools.com/cpp/cpp_strings_access.asp#:~:\
-text=Note%3A%20String%20indexes%20start%20with,
-is%20the%20second%20character%2C%20etc.
-*/
+// gets user input
 std::string userInput() {
+    // variables
     std::string input;
-    std::cout << "Enter a letter: ";
+
+    // asks for input
+    std::cout << "\nEnter a letter: ";
     std::cin >> input;
+
+    // returns input
     return input;
 }
 
-bool isValid(std::string userString) {
-    // string is longer than 1 char
-    if (userString.length() != 1) {
-        std::cout << "Please enter ONE letter.\n";
+// checks if user imputed valid letter
+std::string isValid(std::string userString) {
+    // variables
+    bool repeat = true;
 
-        // string is 1 char long 
-    } else {
-        // user didn't input a letter
-        if (userString[0] < 65 || (userString[0] > 90 && userString[0] < 97) || userString[0] > 122) {
-            std::cout << userString << " is not a letter. Please try again\n";
-            userInput();
+    // loops function until input is valid
+    while (repeat) {
+        // string is longer than 1 char
+        if (userString.length() != 1) {
+            std::cout << "Please enter ONE letter.\n";
+            userString = userInput();
 
-            // if user imputed an accented letter 
-        } else if (userString[0] >= 192 && userString[0] <= 383) {
-            std::cout << "Letters can't be accented. Please try again.\n";
-            userInput();
+            // string is 1 char long
+        } else {
+            // user didn't input a letter
+            if (userString[0] < 65 || (userString[0] > 90 && userString[0] < 97) || userString[0] > 122) {
+                std::cout << userString << " is not a letter. Please try again\n";
+                userString = userInput();
+
+            // user input is valid
+            } else {
+                repeat = false;
+            }
         }
     }
-    return true;
+    return userString;
 }
 
 int main() {
     // variables
     std::string userLetter;
     std::string vowels[] = {"a", "A", "e", "E", "i", "I", "o", "O", "u", "U"};
-    bool isVowel = false;
+    bool isVowel, repeat;
 
-    // getting user input
-    userLetter = userInput();
+    // assigning variables (not user input)
+    isVowel = false;
+    repeat = true;
 
-    isValid(userLetter);
+    while (repeat) {
+        // getting user input
+        userLetter = userInput();
 
-    // checks if user letter is a vowel
-    for (int i = 0; i < 9; i++) {
-        if (vowels[i] == userLetter) {
-            isVowel = true;
-        }
-    }
-
-    // checks if user letter is a y
-    if (userLetter == "y" || userLetter == "Y") {
-        std::cout << userLetter << " is both a vowel and a consonant\n";
+        userLetter = isValid(userLetter);
 
         // checks if user letter is a vowel
-    } else if (isVowel) {
-        std::cout << userLetter << " is a vowel\n";
+        for (int i = 0; i < 9; i++) {
+            if (vowels[i] == userLetter) {
+                isVowel = true;
+            }
+        }
 
-    // if user letter is a consonant
-    } else {
-        std::cout << userLetter << " is a consonant\n";
+        // checks if user letter is a y
+        if (userLetter == "y" || userLetter == "Y") {
+            std::cout << userLetter << " is both a vowel and a consonant\n";
+
+            // checks if user letter is a vowel
+        } else if (isVowel) {
+            std::cout << userLetter << " is a vowel\n";
+
+            // if user letter is a consonant
+        } else {
+            std::cout << userLetter << " is a consonant\n";
+        }
+
+        // if user wants to replay
+        replay();
     }
 }
