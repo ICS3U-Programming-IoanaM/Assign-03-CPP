@@ -62,8 +62,11 @@ std::string isValid(std::string userString) {
             // string is 1 char long
         } else {
             // user didn't input a letter
-            if (userString[0] < 65 || (userString[0] > 90 && userString[0] < 97) || userString[0] > 122) {
-                std::cout << userString << " is not a letter. Please try again\n";
+            if (userString[0] < 65 ||
+            (userString[0] > 90 && userString[0] < 97)
+            || userString[0] > 122) {
+                std::cout << userString
+                << " is not a letter. Please try again\n";
                 userString = userInput();
 
             // user input is valid
